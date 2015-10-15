@@ -18,12 +18,10 @@ modules:
         Codeception\Extension\MultiDb:
             connectors:
                 Primary:
-                    dsn: "mysql:host=sapien.me.redmatter.com;port=3306;dbname=Org"
-                    user: 'codeception_core'
+                    dsn: "mysql:host=primary.db.example.com;port=3306;dbname=Demo1"
+                    user: 'demo_primary'
                     password: ''
                 Secondary:
-                    dsn: "mysql:host=sapien.me.redmatter.com;port=3306;dbname=Aux"
-                    user: 'codeception_big'
+                    dsn: "mysql:host=secondary.db.example.com;port=3306;dbname=Demo2"
+                    user: 'demo_secondary'
                     password: ''
-
-
