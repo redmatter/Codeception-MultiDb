@@ -1,18 +1,23 @@
 {
-  "name": "natterbox/codeception-multidb",
-  "description": "Multi Database support for Codeception",
-  "minimum-stability": "dev",
-  "license": "MIT License",
-  "authors": [
-    {
-      "name": "Dino Korah",
-      "email": "dino@redmatter.com"
+    "name": "natterbox/codeception-multidb",
+    "description": "Extension for codeception that makes it possible to switch between and interact with multiple databases. Supports only MySQL for now.",
+    "type": "library",
+    "require": {
+        "codeception/codeception": "2.0.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "dino.korah",
+            "email": "dino@redmatter.com"
+        },
+        {
+            "name": "andrew.bulford",
+            "email": "andrew.bulford@redmatter.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {"Codeception\\Extension\\": "src/Codeception/Extension/"}
     }
-  ],
-  "require-dev": {
-    "codeception/codeception": "2.0.*"
-  },
-  "autoload": {
-    "psr-4": {"Codeception\\Extension\\": "src/Codeception/Extension/"}
-  }
 }
