@@ -7,7 +7,7 @@ It is still in development, but is stable enough for anyone to give it a try.
 # Installation
 
 ```
-composer require natterbox/Codeception-MultiDb
+composer require natterbox/codeception-multidb
 ```
 
 # How to contribute?
