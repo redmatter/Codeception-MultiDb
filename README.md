@@ -18,11 +18,11 @@ If you are to contribute a feature or bug-fix, please do log an issue before sta
 
 Coding standard that is followed here is `PSR-2`.
 
-## Why version 2.0?
+## Why version `2.0`?
 
 Version `2.0` will be the branch for migrating MultiDb to Codeception version `2.1`.
 
-## What is happening to version 1.0?
+## What is happening to version `1.0`?
 
 Version `1.0` is still a supported version; any major feature additions or bug fixes will be done for both versions.
 
