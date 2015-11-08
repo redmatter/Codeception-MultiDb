@@ -5,12 +5,12 @@
 
 namespace Codeception\Extension;
 
-use Codeception\Exception\TestRuntime as TestRuntimeException;
+use Codeception\Exception\TestRuntimeException;
 use Codeception\Extension\MultiDb\Utils\AsIs;
 use Codeception\Extension\MultiDb\Utils\CleanupAction;
 use Codeception\Lib\Driver\Db as Driver;
-use Codeception\Exception\Module as ModuleException;
-use Codeception\Exception\ModuleConfig as ModuleConfigException;
+use Codeception\Exception\ModuleException;
+use Codeception\Exception\ModuleConfigException;
 use Codeception\Module;
 use Codeception\TestCase;
 
