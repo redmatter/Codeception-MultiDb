@@ -221,7 +221,7 @@ class MultiDb extends Module
      */
     public function createDatabase($database, $options = null, $cleanup_after = self::CLEANUP_AFTER_TEST)
     {
-        $options = $options ?: [];
+        $options = $options?:[];
         if (!is_array($options)) {
             throw new TestRuntimeException('Invalid options given for '.__METHOD__);
         }
@@ -285,7 +285,7 @@ class MultiDb extends Module
      *
      * @return mixed what ever the callable returns
      */
-    public function connectToDbAndExecute($connector, callable $callable)
+    public function connectToDbAndExecute($connector, $callable)
     {
         $old_connector = $this->amConnectedToDb($connector);
         $result = call_user_func($callable);
@@ -376,18 +376,18 @@ class MultiDb extends Module
         // mapper function that maps each field from $pk_field to one or zero
         // 1 if the field is set in the given $field_values and is not NULL; 0 otherwise
         $fnIssetFieldAndNotNull = function ($a_pk_field) use ($field_values) {
-            return isset($field_values[$a_pk_field]) ? 1 : 0;
+            return (isset($field_values[$a_pk_field]) && $field_values[$a_pk_field] !== null)? 1: 0;
         };
 
-        // is empty or $pk_value_for_cleanup is an array with all null values
-        if (empty($pk_value_for_cleanup)
+        if (!$pk_value_for_cleanup // is empty
+            // or $pk_value_for_cleanup is an array with all null values
             || (is_array($pk_value_for_cleanup) && count(array_diff($pk_value_for_cleanup, [null])) == 0)
         ) {
             if (count($pk_field) == 1 && $last_insert_id) {
                 $pk_value_for_cleanup = [reset($pk_field) => $last_insert_id];
 
-                // if the fields in pk_field are present in $field_values and none of them are NULL,
-                // then we can take values from there
+            // if the fields in pk_field are present in $field_values and none of them are NULL,
+            // then we can take values from there
             } elseif (0 !== array_product(array_map($fnIssetFieldAndNotNull, $pk_field))) {
                 // filter the $field_values using $pk_field as keys
                 $pk_value_for_cleanup = array_intersect_key($field_values, array_flip($pk_field));
@@ -398,7 +398,7 @@ class MultiDb extends Module
         } else {
             $pk_value_for_cleanup = array_combine(
                 $pk_field,
-                is_array($pk_value_for_cleanup) ? $pk_value_for_cleanup : [$pk_value_for_cleanup]
+                is_array($pk_value_for_cleanup)? $pk_value_for_cleanup: [$pk_value_for_cleanup]
             );
         }
 
@@ -407,7 +407,8 @@ class MultiDb extends Module
         }
 
         if ($last_insert_id !== null) {
-            return $pk_field_was_array ? array_combine($pk_field, [$last_insert_id]) : $last_insert_id;
+            $ret = $pk_field_was_array? array_combine($pk_field, [$last_insert_id]) : $last_insert_id;
+            return $ret;
         }
 
         if ($multi_field_pk_values !== null) {
@@ -473,7 +474,7 @@ class MultiDb extends Module
      * @param array  $field_updates and array of field values of the form ['Field1'=>Value, 'Field2'=>Value] which will
      *                              describe the new values for the given fields
      *
-     * @return int number of rows updated
+     * @return void
      */
     public function haveUpdatedDb($table, $field_updates, $criteria)
     {
@@ -499,8 +500,6 @@ class MultiDb extends Module
                 )
             );
         }
-
-        return $statement->rowCount();
     }
 
     /**
@@ -738,11 +737,10 @@ class MultiDb extends Module
      *
      * @internal Use this only from other modules, as it does not generate a readable step output
      */
-    public function transaction(callable $callable)
+    public function transaction($callable)
     {
         try {
             $this->debug('Current Connector is '.$this->getCurrentConnector());
-
             $this->startTransaction();
             $result = call_user_func($callable);
             $this->commitTransaction();
@@ -876,7 +874,7 @@ class MultiDb extends Module
     protected static function normaliseParameterList($params)
     {
         $toScalar = function ($value) {
-            return (null === $value) ? $value : (string)$value;
+            return (null === $value)? $value: (string)$value;
         };
 
         array_walk(
@@ -886,7 +884,7 @@ class MultiDb extends Module
 
                 // Check if no field was specified (so the array index will be an integer).
                 if (is_numeric($field)) {
-                    $value = ($value instanceof AsIs) ?
+                    $value = ($value instanceof AsIs)?
                         array(null, null, $toScalar($value)) : array(null, '?', $toScalar($value));
                 } else {
                     $value = ($value instanceof AsIs)?
@@ -920,7 +918,7 @@ class MultiDb extends Module
         $ignore_duplicate_key_sql = null;
         // either true or an array containing field names
         if ($ignore_duplicate_key && (!is_array($ignore_duplicate_key) || count($ignore_duplicate_key))) {
-            $update_fields = is_array($ignore_duplicate_key) ? $ignore_duplicate_key : array_keys($data_rows[0]);
+            $update_fields = is_array($ignore_duplicate_key)? $ignore_duplicate_key: array_keys($data_rows[0]);
             $ignore_duplicate_key_sql = ' ON DUPLICATE KEY UPDATE '.
                 implode(
                     ', ',
@@ -987,7 +985,7 @@ class MultiDb extends Module
         // either true or an array containing field names
         if ($ignore_duplicate_key && (!is_array($ignore_duplicate_key) || count($ignore_duplicate_key))) {
             $update_fields = array_filter(
-                is_array($ignore_duplicate_key) ? $ignore_duplicate_key : array_keys($data),
+                is_array($ignore_duplicate_key)? $ignore_duplicate_key: array_keys($data),
                 function ($field) use ($pk_field) {
                     return !in_array($field, $pk_field);
                 }
@@ -1056,14 +1054,14 @@ class MultiDb extends Module
      */
     private static function prepareClause($field, $placeholder, $value, Driver $driver, $is_for_nulls = true)
     {
-        $rhs = ($placeholder === null) ? $value : $placeholder;
+        $rhs = ($placeholder === null)? $value : $placeholder;
 
         if ($field === null) {
             return $rhs;
         }
 
         // If the value is NULL, we need to use IS NULL, rather than =.
-        $operator = (($is_for_nulls && ($value === null)) ? 'IS' : '=');
+        $operator = (($is_for_nulls && ($value === null))? 'IS': '=');
         return "{$driver->getQuotedName($field)} {$operator} {$rhs}";
     }
 
@@ -1229,20 +1227,5 @@ class MultiDb extends Module
         );
 
         return [$sql, $param_list];
-    }
-
-    /**
-     * Get driver specific encoded table and field names; eg. back-tick for database, table and field names in MySQL
-     *
-     * @param string $name
-     *
-     * @return string
-     *
-     * @internal for use from other modules due to incompatibility with readable steps output
-     *
-     */
-    public function getQuotedName($name)
-    {
-        return $this->getChosenDriver()->getQuotedName($name);
     }
 }
