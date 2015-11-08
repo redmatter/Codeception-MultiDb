@@ -14,6 +14,19 @@ composer require natterbox/codeception-multidb
 
 Please feel free to fork and submit a pull request. Bug fixes and general usability comments would be much appreciated.
 
-If you are to contribute a feature or bug-fix, please do log an issue before starting to work on the code. Then branch from `master` to make those changes. Coding standard that is followed here is `PSR-2`.
+If you are to contribute a feature or bug-fix, please do log an issue before starting to work on the code. Then branch from the appropriate release branch, to make those changes (see below for details).
 
-The codeception version that this module has been tested against is `2.0`.
+Coding standard that is followed here is `PSR-2`.
+
+# Why version 2.0?
+
+Version `2.0` will be the branch for migrating MultiDb to Codeception version `2.1`.
+
+# What is happening to version 1.0?
+
+Version `1.0` is still a supported version; any major feature additions or bug fixes will be done for both versions.
+
+# Is `master` the same as `2.0`?
+
+It is essentially the same; but for the purpose of submitting pull requests, you should choose the appropriate branch, depending on the codeception version you have developed against.
+
