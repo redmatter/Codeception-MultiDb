@@ -3,6 +3,7 @@
     "description": "Extension for codeception that makes it possible to switch between and interact with multiple databases. Supports only MySQL for now.",
     "type": "library",
     "require": {
+        "php": ">=5.4.0",
         "codeception/codeception": "2.0.*"
     },
     "license": "MIT",
