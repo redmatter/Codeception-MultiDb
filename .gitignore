@@ -7,4 +7,4 @@ vendor/
 # composer.lock
 
 examples/tests/_output/*
-examples/tests/*/*Tester.php
+examples/tests/_support/_generated/*
