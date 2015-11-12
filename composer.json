@@ -1,6 +1,6 @@
 {
     "name": "natterbox/codeception-multidb",
-    "description": "Extension for codeception that makes it possible to switch between and interact with multiple databases. Supports only MySQL for now.",
+    "description": "Switch between multiple databases in a Codeception Test",
     "type": "library",
     "require": {
         "php": ">=5.4.0",
