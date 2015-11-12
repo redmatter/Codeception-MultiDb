@@ -6,8 +6,16 @@ It is still in development, but is stable enough for anyone to give it a try.
 
 # Installation
 
+Codeception v2.0
+
 ```
-composer require natterbox/codeception-multidb
+composer require "natterbox/codeception-multidb: ~1.0.0"
+```
+
+A version that supports codeception v2.1 is still under development. You can install it by using the `composer` command below.
+
+```
+composer require "natterbox/codeception-multidb: 2.0.x-dev"
 ```
 
 # How to contribute?
