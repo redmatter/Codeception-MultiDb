@@ -15,8 +15,10 @@ composer require "natterbox/codeception-multidb: ~1.0.0"
 A version that supports codeception v2.1 is under active development. You can install it by using the `composer` command below.
 
 ```
-composer require "natterbox/codeception-multidb: 2.0.x-dev"
+composer require "natterbox/codeception-multidb: ~2.0@dev"
 ```
+
+NOTE: Even though there has not yet been a stable release for `2.0`, it is fully compatible with `1.0` for features and its API. Please do log an issue for any bugs or possible improvemnts you identify.
 
 # How to contribute?
 
