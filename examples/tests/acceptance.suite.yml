@@ -13,3 +13,13 @@ modules:
     config:
         PhpBrowser:
             url: 'http://localhost/myapp/'
+        Codeception\Extension\MultiDb:
+            connectors:
+                Primary:
+                    dsn: "mysql:host=server1.example.com;port=3306;dbname=PrimaryDb"
+                    user: 'dbuser'
+                    password: ''
+                Secondary:
+                    dsn: "mysql:host=server2.example.com;port=3306;dbname=SecondaryDb"
+                    user: 'dbuser'
+                    password: ''
