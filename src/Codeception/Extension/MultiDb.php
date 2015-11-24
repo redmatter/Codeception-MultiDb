@@ -234,7 +234,7 @@ class MultiDb extends Module
         }
 
         $this->executeSql($sql);
-        $this->setupCleanup(CleanupAction::runSql("DROP DATABASE {$database}"), $cleanup_after);
+        $this->setupDbCleanup(CleanupAction::runSql("DROP DATABASE {$database}"), $cleanup_after);
     }
 
     /**
@@ -250,7 +250,7 @@ class MultiDb extends Module
     public function createTableLike($template_table, $table, $cleanup_after = self::CLEANUP_AFTER_TEST)
     {
         $this->executeSql("CREATE TABLE {$table} LIKE {$template_table}");
-        $this->setupCleanup(CleanupAction::runSql("DROP TABLE {$table}"), $cleanup_after);
+        $this->setupDbCleanup(CleanupAction::runSql("DROP TABLE {$table}"), $cleanup_after);
     }
 
     /**
@@ -403,7 +403,7 @@ class MultiDb extends Module
         }
 
         if ($cleanup_after && $pk_value_for_cleanup) {
-            $this->setupCleanup(CleanupAction::delete($table, $pk_value_for_cleanup), $cleanup_after);
+            $this->setupDbCleanup(CleanupAction::delete($table, $pk_value_for_cleanup), $cleanup_after);
         }
 
         if ($last_insert_id !== null) {
@@ -460,7 +460,7 @@ class MultiDb extends Module
         }
 
         if ($cleanup_criteria && $cleanup_after) {
-            $this->setupCleanup(CleanupAction::delete($table, $cleanup_criteria), $cleanup_after);
+            $this->setupDbCleanup(CleanupAction::delete($table, $cleanup_criteria), $cleanup_after);
         }
     }
 
@@ -800,8 +800,24 @@ class MultiDb extends Module
      * @param \Codeception\Extension\MultiDb\Utils\CleanupAction $cleanup_action
      * @param int $cleanup_event Defines when the cleanup action should take place, the MultiDb::CLEANUP_* constants
      *                           should be used here.
+     *
+     * @deprecated changing the name to symbolise ONLY database cleanup; use setupDbCleanup() instead
+     *
+     * @see setupDbCleanup()
      */
     public function setupCleanup(CleanupAction $cleanup_action, $cleanup_event = self::CLEANUP_AFTER_TEST)
+    {
+        $this->setupDbCleanup($cleanup_action, $cleanup_event);
+    }
+
+    /**
+     * Setup cleanup
+     *
+     * @param \Codeception\Extension\MultiDb\Utils\CleanupAction $cleanup_action
+     * @param int $cleanup_event Defines when the cleanup action should take place, the MultiDb::CLEANUP_* constants
+     *                           should be used here.
+     */
+    public function setupDbCleanup(CleanupAction $cleanup_action, $cleanup_event = self::CLEANUP_AFTER_TEST)
     {
         $cleanup_action->setConnector($this->chosenConnector);
         switch ($cleanup_event) {
