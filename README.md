@@ -20,6 +20,12 @@ composer require "natterbox/codeception-multidb: ~2.0@dev"
 
 NOTE: Even though there has not yet been a stable release for `2.0`, it is fully compatible with `1.0` for features and its API. Please do log an issue for any bugs or possible improvemnts you identify.
 
+# Usage
+
+Please see `DemoCest` in examples.
+
+In order to avoid MultiDb (or even the Db module from codeception) leaving behind modifications in the database, due to the user aborting a test run by pressing `Ctrl+C`, leading to breaking tests during further runs, consider using the `natterbox/codeception-ctrlc` module.
+
 # How to contribute?
 
 Please feel free to fork and submit a pull request. Bug fixes and general usability comments would be much appreciated.
