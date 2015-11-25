@@ -7,19 +7,16 @@
 class_name: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser
         - AcceptanceHelper
         - Codeception\Extension\MultiDb
     config:
-        PhpBrowser:
-            url: 'http://localhost/myapp/'
         Codeception\Extension\MultiDb:
             connectors:
                 Primary:
-                    dsn: "mysql:host=server1.example.com;port=3306;dbname=PrimaryDb"
-                    user: 'dbuser'
+                    dsn: "mysql:host=server1.db.example.com;port=3306;dbname=Config"
+                    user: 'demo_primary'
                     password: ''
                 Secondary:
-                    dsn: "mysql:host=server2.example.com;port=3306;dbname=SecondaryDb"
-                    user: 'dbuser'
+                    dsn: "mysql:host=server2.db.example.com;port=3306;dbname=Warehouse"
+                    user: 'demo_secondary'
                     password: ''

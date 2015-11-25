@@ -20,5 +20,8 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {"Codeception\\Extension\\": "src/Codeception/Extension/"}
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.5"
     }
 }

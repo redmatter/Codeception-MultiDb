@@ -8,20 +8,3 @@ settings:
     bootstrap: _bootstrap.php
     colors: true
     memory_limit: 1024M
-modules:
-    config:
-        Db:
-            dsn: ''
-            user: ''
-            password: ''
-            dump: tests/_data/dump.sql
-        Codeception\Extension\MultiDb:
-            connectors:
-                Primary:
-                    dsn: "mysql:host=primary.db.example.com;port=3306;dbname=Demo1"
-                    user: 'demo_primary'
-                    password: ''
-                Secondary:
-                    dsn: "mysql:host=secondary.db.example.com;port=3306;dbname=Demo2"
-                    user: 'demo_secondary'
-                    password: ''
