@@ -1,6 +1,6 @@
 # Codeception MultiDb Extension
 
-This extension supports multiple dabatase backends, providing equivalant service as the [Db module](http://codeception.com/docs/modules/Db). Additionally it provices capability to safely switch between database connectors and multi-level transaction support.
+This extension supports multiple dabatase backends, providing equivalant service as the [Db module](http://codeception.com/docs/modules/Db). Additionally it provides capability to safely switch between database connectors and multi-level transaction support.
 
 Currently the only database supported is MySQL; but it is pretty straight forward to add support for other databases.
 
