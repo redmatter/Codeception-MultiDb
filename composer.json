@@ -1,5 +1,5 @@
 {
-    "name": "natterbox/codeception-multidb",
+    "name": "redmatter/codeception-multidb",
     "description": "Extension for codeception that makes it possible to switch between and interact with multiple databases. Supports only MySQL for now.",
     "type": "library",
     "require": {
