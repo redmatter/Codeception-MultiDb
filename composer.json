@@ -1,5 +1,5 @@
 {
-    "name": "natterbox/codeception-multidb",
+    "name": "redmatter/codeception-multidb",
     "description": "Switch between multiple databases in a Codeception Test",
     "type": "library",
     "require": {
