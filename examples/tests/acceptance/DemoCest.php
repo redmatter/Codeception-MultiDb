@@ -1,6 +1,6 @@
 <?php
 
-namespace Natterbox\Codeception\Tests;
+namespace Redmatter\Codeception\Tests;
 
 use \AcceptanceTester;
 use Faker\Factory as FakerFactory;
