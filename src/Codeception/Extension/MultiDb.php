@@ -964,7 +964,7 @@ class MultiDb extends Module
                             return $placeholder;
                         }
 
-                        return $value;
+                        return $param_value;
                     },
                     $params
                 )
