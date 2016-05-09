@@ -573,11 +573,11 @@ class MultiDb extends Module
      *
      * @return array an array of rows ( depending on the $fetchPdoArgs given )
      */
-    public function getFromDb($table, $criteria, $fields = null, $fetchPdoArgs = array(\PDO::FETCH_ASSOC))
+    public function getFromDb($table, $criteria, $limit = 1, $fields = null, $fetchPdoArgs = array(\PDO::FETCH_ASSOC))
     {
         $driver = $this->getChosenDriver();
 
-        list($query, $params) = $this->formSqlSelect($table, $criteria, $fields);
+        list($query, $params) = $this->formSqlSelect($table, $criteria, $fields, $limit);
         $this->debugSection('Query', $query);
         $this->debugSection('Params', $params);
 
@@ -1153,7 +1153,7 @@ class MultiDb extends Module
      *
      * @return array of the sql query and params list
      */
-    private function formSqlSelect($table, $criteria, $columns = null)
+    private function formSqlSelect($table, $criteria, $columns = null, $limit)
     {
         $driver = $this->getChosenDriver();
 
@@ -1200,7 +1200,8 @@ class MultiDb extends Module
                     },
                     $criteriaParams
                 )
-            )
+            ), 
+            $limit
         );
 
         return [$sql, $param_list];
