@@ -24,7 +24,7 @@ NOTE: Even though there has not yet been a stable release for `2.0`, it is fully
 
 # Usage
 
-Please see `DemoCest` in examples.
+Please see [`DemoCest`](examples/tests/acceptance/DemoCest.php) and [`acceptance.suite.yml`](examples/tests/acceptance.suite.yml) in examples.
 
 In order to avoid MultiDb (or even the Db module from codeception) leaving behind modifications in the database, due to the user aborting a test run by pressing `Ctrl+C`, leading to breaking tests during further runs, consider using the `natterbox/codeception-ctrlc` module.
 
