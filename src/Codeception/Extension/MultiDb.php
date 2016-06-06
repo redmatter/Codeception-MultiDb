@@ -27,7 +27,7 @@ class MultiDb extends Module
 
     protected $dbh;
 
-    protected $config = ['connectors' => false, 'timezone' => 'UTC'];
+    protected $config = ['connectors' => false, 'timezone' => '+00:00'];
 
     protected $requiredFields = ['connectors'];
 
