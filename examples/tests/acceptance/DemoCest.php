@@ -12,18 +12,26 @@ class DemoCest
 
         $user_id = $I->transaction(function () use ($I) {
             $I->executeSql('SELECT NOW()');
-            $user_id = $I->haveInDb('PrimaryDb.User', [
-                'UserName'=>'someone@example.com',
+            $user_id = $I->haveInDb('DemoConfig.User', [
+                'OrganisationID'=>1,
                 'Name'=>'Some One',
-                'CreatedAt'=>'@asis NOW()'
+                'Email'=>'someone@example.com',
+                'Address'=>'PO Box 1213, London, United Kingdom',
+                'Active'=>'YES',
             ]);
-            $I->haveInDb('PrimaryDb.UserPassword', [
+            $I->haveInDb('DemoConfig.UserPassword', [
                 'UserID'=>$user_id,
-                'Password'=>'topsecret',
-                'CreatedAt'=>'@asis NOW()'
+                'Hash'=>'@asis UNHEX(SHA1("topsecret"))',
+                'CreatedAt'=>'@asis NOW()',
+                'ExpiresAt'=>'@asis DATE_ADD(CreatedAt, INTERVAL 10 DAY)'
             ]);
             
             return $user_id;
         });
+
+        $I->amConnectedToDb('Secondary');
+        codecept_debug(
+            $I->getFromDb('DemoWarehouse.Audit', ['OrganisationID'=>1])
+        );
     }
 }
