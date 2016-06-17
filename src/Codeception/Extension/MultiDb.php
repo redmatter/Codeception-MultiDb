@@ -5,6 +5,7 @@
 
 namespace Codeception\Extension;
 
+use Codeception\Configuration;
 use Codeception\Exception\TestRuntimeException;
 use Codeception\Extension\MultiDb\Utils\AsIs;
 use Codeception\Extension\MultiDb\Utils\CleanupAction;
@@ -85,6 +86,70 @@ class MultiDb extends Module
         $this->timezone = $this->config['timezone'];
 
         parent::_initialize();
+
+        foreach ($this->config['connectors'] as $connector => $connectorConfig) {
+            if ($connectorConfig['populate']) {
+                if ($connectorConfig['cleanup']) {
+                    $this->cleanup($connector);
+                }
+                $this->loadDump($connector);
+            }
+        }
+    }
+
+    /**
+     * Load SQL dump for a connector
+     *
+     * @param string $connector
+     *
+     * @throws ModuleConfigException
+     * @throws ModuleException
+     */
+    protected function loadDump($connector)
+    {
+        $config = $this->config['connectors'][$connector];
+
+        if ($config['dump'] && ($config['cleanup'] || $config['populate'])) {
+            if (!file_exists(Configuration::projectDir() . $config['dump'])) {
+                throw new ModuleConfigException(
+                    __CLASS__,
+                    "\n{$connector} - Dump file doesn't exist. Please check path: {$config['dump']}"
+                );
+            }
+            $sql = file_get_contents(Configuration::projectDir() . $config['dump']);
+            // remove any comments of the form /* ... */
+            $sql = preg_replace('%/\*(?!!\d+)(?:(?!\*/).)*\*/%s', '', $sql);
+            if ($sql) {
+                $sql = explode("\n", $sql);
+            }
+
+            try {
+                $this->debugSection(__CLASS__, "{$connector} - Loading dump from {$config['dump']}");
+                $this->getDriver($connector)->load($sql);
+            } catch (\PDOException $e) {
+                throw new ModuleException(
+                    __CLASS__,
+                    $e->getMessage() . "\nSQL query being executed: " . $sql
+                );
+            }
+        }
+    }
+
+    /**
+     * Cleanup databases
+     *
+     * @param $connector
+     *
+     * @throws ModuleException
+     */
+    protected function cleanup($connector)
+    {
+        try {
+            $this->debugSection(__CLASS__, "$connector - Cleaning up");
+            $this->getDriver($connector)->cleanup();
+        } catch (\Exception $e) {
+            throw new ModuleException(__CLASS__, $e->getMessage());
+        }
     }
 
     // HOOK: before scenario

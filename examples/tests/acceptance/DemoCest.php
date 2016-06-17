@@ -33,7 +33,7 @@ class DemoCest
 
     private function createOrganisation(AcceptanceTester $I, array $details = [])
     {
-        return $I->haveInDb('Config.Organisation', array_merge([
+        return $I->haveInDb('DemoConfig.Organisation', array_merge([
             'Name' => $this->faker->name.' & Co. Ltd.',
             'Address' => str_replace("\n", ', ', $this->faker->address),
             'Active' => 'YES'
@@ -42,7 +42,7 @@ class DemoCest
 
     private function createUser(AcceptanceTester $I, array $details = [])
     {
-        return $I->haveInDb('Config.User', array_merge([
+        return $I->haveInDb('DemoConfig.User', array_merge([
             'Name' => $this->faker->name,
             'Email' => $this->faker->email,
             'Address' => str_replace("\n", ', ', $this->faker->address),
@@ -56,7 +56,7 @@ class DemoCest
             $password = $this->faker->password;
         }
 
-        $I->haveInDb('Config.UserPassword', [
+        $I->haveInDb('DemoConfig.UserPassword', [
             'UserID' => $user_id,
             'Hash' => sha1($password, true),
             'CreatedAt' => '@asis NOW()',
@@ -66,10 +66,11 @@ class DemoCest
 
     private function createAudit(AcceptanceTester $I, $organisation_id, $user_id, array $data)
     {
-        $I->haveInDb('Warehouse.Audit', [
+        $I->haveInDb('DemoWarehouse.Audit', [
             'OrganisationID'=>$organisation_id,
             'UserID'=>$user_id,
-            'JSON'=>json_encode($data)
+            'JSON'=>json_encode($data),
+            'Time'=>'@asis NOW()'
         ], 'OrganisationID', $organisation_id);
     }
 }
