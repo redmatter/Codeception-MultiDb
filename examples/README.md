@@ -10,7 +10,8 @@ First of all, you need to change the hostname(s) of the database server in [conf
 
 Now create the databases and create `demo` user.
 
-    mysql -u root -h primary.db.example.com -p < tests/_data/setup.sql
+    mysql -u root -h primary.db.example.com -p < tests/_data/setup/primary.sql
+    mysql -u root -h secondary.db.example.com -p < tests/_data/setup/secondary.sql
 
 ## How to run the example?
 

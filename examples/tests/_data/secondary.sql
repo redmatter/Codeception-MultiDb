@@ -15,10 +15,6 @@ CREATE TABLE IF NOT EXISTS `DemoWarehouse`.`Audit` (
  KEY `Time` (`Time`)
 );
 
-ALTER TABLE `Audit`
-  ADD FOREIGN KEY (`OrganisationID`) REFERENCES `DemoConfig`.`Organisation`(`ID`)
-    ON DELETE CASCADE ON UPDATE CASCADE;
-
 -- data
 
 -- `DemoWarehouse`.`Audit`
