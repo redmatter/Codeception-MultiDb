@@ -13,7 +13,7 @@ use Codeception\Exception\Module as ModuleException;
 use Codeception\Exception\ModuleConfig as ModuleConfigException;
 use Codeception\Module;
 use Codeception\TestCase;
-use Codeception\Configuration as Configuration;
+use Codeception\Configuration;
 
 /**
  * MultiDb - Module that allows tests to perform setup queries and assertions across multiple databases.
@@ -97,40 +97,55 @@ class MultiDb extends Module
         }
     }
 
+    /**
+     * Load SQL dump for a connector
+     *
+     * @param string $connector
+     *
+     * @throws ModuleConfigException
+     * @throws ModuleException
+     */
     protected function loadDump($connector)
     {
         $config = $this->config['connectors'][$connector];
         
-        if ($config['dump'] && ($config['cleanup'] or ($config['populate']))) {
+        if ($config['dump'] && ($config['cleanup'] || $config['populate'])) {
             if (!file_exists(Configuration::projectDir() . $config['dump'])) {
                 throw new ModuleConfigException(
-                  __CLASS__,
-                  "\nFile with dump doesn't exist.
-                    Please, check path for sql file: " . $config['dump']
+                    __CLASS__,
+                    "\n{$connector} - Dump file doesn't exist. Please check path: {$config['dump']}"
                 );
             }
             $sql = file_get_contents(Configuration::projectDir() . $config['dump']);
-            $sql = preg_replace('%/\*(?!!\d+)(?:(?!\*/).)*\*/%s', "", $sql);
-            if (!empty($sql)) {
+            // remove any comments of the form /* ... */
+            $sql = preg_replace('%/\*(?!!\d+)(?:(?!\*/).)*\*/%s', '', $sql);
+            if ($sql) {
                 $sql = explode("\n", $sql);
             }
-        }
-        if (!$sql) {
-            return;
-        }
-        try {
-            $this->getDriver($connector)->load($sql);
-        } catch (\PDOException $e) {
-            throw new ModuleException(
-              __CLASS__,
-              $e->getMessage() . "\nSQL query being executed: " . $sql
-            );
+
+            try {
+                $this->debugSection(__CLASS__, "{$connector} - Loading dump from {$config['dump']}");
+                $this->getDriver($connector)->load($sql);
+            } catch (\PDOException $e) {
+                throw new ModuleException(
+                    __CLASS__,
+                    $e->getMessage() . "\nSQL query being executed: " . $sql
+                );
+            }
         }
     }
 
+    /**
+     * Cleanup databases
+     *
+     * @param $connector
+     *
+     * @throws ModuleException
+     */
     protected function cleanup($connector)
     {
         try {
+            $this->debugSection(__CLASS__, "$connector - Cleaning up");
             $this->getDriver($connector)->cleanup();
         } catch (\Exception $e) {
             throw new ModuleException(__CLASS__, $e->getMessage());

@@ -18,10 +18,16 @@ modules:
         Codeception\Extension\MultiDb:
             connectors:
                 Primary:
-                    dsn: "mysql:host=primary.db.example.com;port=3306;dbname=Demo1"
-                    user: 'demo_primary'
-                    password: ''
+                    dsn: "mysql:host=primary.db.example.com;port=3306;dbname=DemoConfig"
+                    user: 'demo'
+                    password: 'notsecure'
+                    dump: 'tests/_data/primary.sql'
+                    populate: true
+                    cleanup: true
                 Secondary:
-                    dsn: "mysql:host=secondary.db.example.com;port=3306;dbname=Demo2"
-                    user: 'demo_secondary'
-                    password: ''
+                    dsn: "mysql:host=secondary.db.example.com;port=3306;dbname=DemoWarehouse"
+                    user: 'demo'
+                    password: 'notsecure'
+                    dump: 'tests/_data/secondary.sql'
+                    populate: true
+                    cleanup: true
