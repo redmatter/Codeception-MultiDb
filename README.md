@@ -1,5 +1,9 @@
 # Codeception MultiDb Extension
 
+[![Latest Stable Version](https://poser.pugx.org/redmatter/codeception-multidb/version.svg)](https://packagist.org/packages/redmatter/codeception-multidb)
+[![Downloads](https://poser.pugx.org/redmatter/codeception-multidb/d/total.svg)](https://packagist.org/packages/redmatter/codeception-multidb)
+[![License](https://poser.pugx.org/redmatter/codeception-multidb/license.svg)](https://packagist.org/packages/redmatter/codeception-multidb)
+
 This extension supports multiple dabatase backends, providing equivalant service as the [Db module](http://codeception.com/docs/modules/Db). Additionally it provides capability to safely switch between database connectors and multi-level transaction support.
 
 Currently the only database supported is MySQL; but it is pretty straight forward to add support for other databases.
