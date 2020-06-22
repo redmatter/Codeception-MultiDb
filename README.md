@@ -1,6 +1,5 @@
 # Codeception MultiDb Extension
 
-[![Latest Stable Version](https://poser.pugx.org/redmatter/codeception-multidb/version.svg)](https://packagist.org/packages/redmatter/codeception-multidb)
 [![Downloads](https://poser.pugx.org/redmatter/codeception-multidb/d/total.svg)](https://packagist.org/packages/redmatter/codeception-multidb)
 [![License](https://poser.pugx.org/redmatter/codeception-multidb/license.svg)](https://packagist.org/packages/redmatter/codeception-multidb)
 
