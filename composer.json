@@ -3,7 +3,7 @@
     "description": "Switch between multiple databases in a Codeception Test",
     "type": "library",
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.4.0 | ^8.4",
         "codeception/codeception": "~2.1.0"
     },
     "license": "MIT",

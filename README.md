@@ -25,6 +25,18 @@ composer require "redmatter/codeception-multidb: ~2.0@dev"
 
 NOTE: Even though there has not yet been a stable release for `2.0`, it is fully compatible with `1.0` for features and its API. Please do log an issue for any bugs or possible improvemnts you identify.
 
+# Installation on local environment
+1. Clone the repository:
+   ```bash
+   git clone git@github.com:redmatter/Codeception-MultiDb.git
+
+2. Navigate to the project directory:
+   ```bash
+   cd Codeception-MultiDb
+3. Install dependencies using Composer:
+   ```bash
+   composer install
+
 # Usage
 
 Please see [`DemoCest`](examples/tests/acceptance/DemoCest.php) and [`acceptance.suite.yml`](examples/tests/acceptance.suite.yml) in [examples](examples).
@@ -50,4 +62,3 @@ Version `1.0` is still a supported version; any major feature additions or bug f
 ## Is `master` the same as `2.0`?
 
 It is essentially the same; but for the purpose of submitting pull requests, you should choose the appropriate branch, depending on the codeception version you have developed against.
-
