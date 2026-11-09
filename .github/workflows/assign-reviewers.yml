@@ -1,0 +1,25 @@
+name: Assign PR Reviewers
+
+# Event types are the only thing this stub decides. A type that is not listed
+# raises no run at all, so they have to be named here. Which actions and which
+# base branches are actually routed is decided in the reusable workflow, so a
+# policy change is a release rather than an edit in every repo.
+on:
+  pull_request:
+    types: [opened, ready_for_review, reopened, converted_to_draft]
+
+permissions:
+  contents: read
+
+jobs:
+  assign-reviewers:
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: redmatter/github-workflows/.github/workflows/pr-assign-reviewers.yml@v1
+    # inherit: the callee needs one org-scoped secret (the CICD Changer app key).
+    # Inheriting avoids naming it in every repo, and the callee declares it required: false.
+    # Override the central default (1 reviewer) if this repo needs more:
+    # with:
+    #   reviewer-count: 2
+    secrets: inherit
