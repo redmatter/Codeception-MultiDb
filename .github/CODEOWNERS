@@ -1,0 +1,15 @@
+# The platform team owns these paths by policy, not by contribution.
+/.github/** @redmatter/platform
+/docs/alarm-runbooks/** @redmatter/platform
+
+# Never add a '*' rule. GitHub would request every owner on every pull request.
+# Put any other rules above the blocks below, or the routing workflow will also pick a reviewer.
+
+# --- BEGIN manual owners (preserved) ---
+# Example: owner @login
+# Naming a team (@redmatter/security) asks that team on every pull request.
+# --- END manual owners (preserved) ---
+
+# --- BEGIN excluded owners (preserved) ---
+# Example: exclude @login
+# --- END excluded owners (preserved) ---
