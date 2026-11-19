@@ -28,9 +28,9 @@ class MultiDb extends Module
 
     protected $dbh;
 
-    protected $config = ['connectors' => false, 'timezone' => 'UTC'];
+    protected array $config = ['connectors' => false, 'timezone' => 'UTC'];
 
-    protected $requiredFields = ['connectors'];
+    protected array $requiredFields = ['connectors'];
 
     /** @var  Driver[] */
     protected $drivers = [];
@@ -154,7 +154,7 @@ class MultiDb extends Module
 
     // HOOK: before scenario
     // @codingStandardsIgnoreLine overridden function from \Codeception\Module
-    public function _before(TestCase $test)
+    public function _before(TestCase|\Codeception\TestInterface $test)
     {
         if ($this->transaction_level > 0) {
             $this->rollbackTransaction();
@@ -164,7 +164,7 @@ class MultiDb extends Module
 
     // HOOK: after scenario
     // @codingStandardsIgnoreLine overridden function from \Codeception\Module
-    public function _after(TestCase $test)
+    public function _after(TestCase|\Codeception\TestInterface $test)
     {
         $this->debug(__CLASS__.'::'.__FUNCTION__.'()');
 
@@ -206,7 +206,7 @@ class MultiDb extends Module
     }
 
     // @codingStandardsIgnoreLine overridden function from \Codeception\Module
-    public function _failed(TestCase $test, $fail)
+    public function _failed(TestCase|\Codeception\TestInterface $test, $fail)
     {
         /** @var \PHPUnit_Framework_Exception $fail */
 
